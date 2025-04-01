@@ -195,7 +195,7 @@ export default function PricingPage() {
   )
 }
 
-function PricingFeature({ feature, tooltip = null }) {
+function PricingFeature({ feature, tooltip = null }: { feature: string; tooltip?: string | null }) {
   if (tooltip) {
     return (
       <TooltipProvider>
@@ -223,7 +223,7 @@ function PricingFeature({ feature, tooltip = null }) {
   )
 }
 
-function FaqItem({ question, answer }) {
+function FaqItem({ question, answer }: { question: string; answer: string }) {
   return (
     <div className="space-y-2">
       <h3 className="text-lg font-medium text-gray-900 dark:text-white">{question}</h3>
