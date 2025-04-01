@@ -13,15 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
 
-interface Question {
-  id: string;
-  text: string;
-  // Add other properties as needed
-}
 
-function handleQuestion({ question }: { question: string }) {
-  // ...existing code...
-}
 
 interface FaqItemProps {
   question: string;
