@@ -23,6 +23,20 @@ function handleQuestion({ question }: { question: Question }) {
   // ...existing code...
 }
 
+interface FaqItemProps {
+  question: string;
+  answer: string;
+}
+
+function FaqItem({ question, answer }: FaqItemProps) {
+  return (
+    <div className="space-y-2">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white">{question}</h3>
+      <p className="text-gray-600 dark:text-gray-300">{answer}</p>
+    </div>
+  );
+}
+
 export default function ContactUsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -366,15 +380,6 @@ export default function ContactUsPage() {
           </div>
         </div>
       </footer>
-    </div>
-  )
-}
-
-function FaqItem({ question, answer }) {
-  return (
-    <div className="space-y-2">
-      <h3 className="text-lg font-medium text-gray-900 dark:text-white">{question}</h3>
-      <p className="text-gray-600 dark:text-gray-300">{answer}</p>
     </div>
   )
 }
