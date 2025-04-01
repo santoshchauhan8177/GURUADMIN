@@ -1,7 +1,5 @@
 import Link from "next/link"
 import { MainNav } from "@/components/layout/main-nav"
-import { Zap } from "lucide-react"
-import GuruLogo from "../../public/guru logo.jpg" // Ensure the path is correct
 export function SiteHeader() {
   return (
     <header className="w-full py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">

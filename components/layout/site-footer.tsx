@@ -1,6 +1,4 @@
 import Link from "next/link"
-import { Zap } from "lucide-react"
-import GuruLogo from "../../public/guru logo.jpg" // Ensure the path is correct
 export function SiteFooter() {
   return (
     <footer className="w-full py-6 px-4 sm:px-6 lg:px-8 border-t dark:border-slate-800">
