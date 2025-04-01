@@ -48,27 +48,13 @@ export default function DashboardSidebar({
     >
       <div className="flex items-center justify-between h-16 px-6 border-b dark:border-slate-700">
         <div className="flex items-center">
-          <div className="bg-gradient-to-r from-electric-600 to-energy-500 text-white p-1.5 rounded-md mr-2">
-            <Zap className="w-5 h-5" />
+          <div >
+          <img src="guru logo.jpg" className="h-10 w-auto" alt="Guru-Electrical Logo" /> {/* Fixed logo usage */}
           </div>
-          <span className="text-xl font-semibold dark:text-white font-poppins">Guru-Electrical</span>
+          {/* <span className="text-xl font-semibold dark:text-white font-poppins">Guru-Electrical</span> */}
         </div>
         <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(false)} className="lg:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-5 h-5"
-          >
-            <path d="M18 6L6 18"></path>
-            <path d="M6 6l12 12"></path>
-          </svg>
+      
         </Button>
       </div>
 

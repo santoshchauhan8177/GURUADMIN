@@ -32,8 +32,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
 
-// Import sample data
-import { allOrders } from "@/data/orders-data"
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 interface OrdersTabProps {
   isLoading: boolean
@@ -62,6 +62,20 @@ export default function OrdersTab({
   onUpdateItem,
   onStatusChange,
 }: OrdersTabProps) {
+  const [orders, setOrders] = useState([])
+
+  useEffect(() => {
+    async function fetchOrders() {
+      try {
+        const response = await axios.get("/api/orders")
+        setOrders(response.data)
+      } catch (error) {
+        console.error("Failed to fetch orders:", error)
+      }
+    }
+    fetchOrders()
+  }, [])
+
   const handleSelectItem = (id: string) => {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((item) => item !== id))
@@ -95,7 +109,7 @@ export default function OrdersTab({
     }
   }
 
-  const filteredOrders = allOrders.filter((order) => {
+  const filteredOrders = orders.filter((order) => {
     const matchesSearch =
       order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.id.toLowerCase().includes(searchQuery.toLowerCase())

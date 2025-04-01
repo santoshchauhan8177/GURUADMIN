@@ -28,11 +28,7 @@ export default function HomePage() {
                       Get Started
                     </Button>
                   </Link>
-                  <Link href="/documentation">
-                    <Button variant="outline" className="h-12 px-8 text-lg">
-                      Learn More
-                    </Button>
-                  </Link>
+                 
                 </div>
               </div>
               <div className="lg:w-1/2 mt-10 lg:mt-0">
@@ -40,7 +36,7 @@ export default function HomePage() {
                   <div className="absolute -inset-1 bg-gradient-to-r from-electric-500 to-energy-500 rounded-lg blur-lg opacity-30"></div>
                   <div className="relative bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden">
                     <img
-                      src="/placeholder.svg?height=600&width=800"
+                      src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop?height=600&width=800"
                       alt="Guru-Electrical Dashboard"
                       className="w-full h-auto"
                     />

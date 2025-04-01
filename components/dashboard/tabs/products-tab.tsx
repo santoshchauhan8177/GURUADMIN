@@ -31,8 +31,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-// Import sample data
-import { products } from "@/data/products-data"
+import axios from "axios"
+import { useState, useEffect } from "react"
 
 interface ProductsTabProps {
   isLoading: boolean
@@ -57,6 +57,99 @@ export default function ProductsTab({
   onUpdateItem,
   onStatusChange,
 }: ProductsTabProps) {
+  const [products, setProducts] = useState([]); // Add state for products
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    category: "",
+    price: "",
+    description: "",
+    stock: 0,
+    status: "in-stock",
+    image: "",
+  }); // State for new product
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await axios.post("/api/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        setNewProduct((prev) => ({ ...prev, image: response.data.url })); // Update image URL in state
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+  };
+
+  async function fetchProducts() {
+    try {
+      const response = await axios.get("/api/products"); // Fetch products from API
+      setProducts(response.data); // Update products state
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error while fetching products:", error.response?.data || error.message)
+      } else {
+        console.error("Unexpected error while fetching products:", error)
+      }
+    }
+  }
+
+  async function handleAddProduct() {
+    try {
+      const response = await axios.post("/api/products", newProduct); // POST request to add product
+      const addedProduct = response.data; // Ensure the response contains the new product
+      if (addedProduct && addedProduct.id) {
+        setProducts((prevProducts) => [...prevProducts, addedProduct]); // Update products state
+      } else {
+        console.error("Invalid response data:", response.data);
+      }
+      setNewProduct({
+        name: "",
+        category: "",
+        price: "",
+        description: "",
+        stock: 0,
+        status: "in-stock",
+        image: "",
+      }); // Reset new product state
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error while adding product:", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected error while adding product:", error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts(); // Fetch products when the component mounts
+  }, [])
+
+  const [orders, setOrders] = useState([]) // Add state for orders
+
+  async function fetchOrders() {
+    try {
+      const response = await axios.get("/api/orders")
+      setOrders(response.data) // Use setOrders to update state
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error while fetching orders:", error.response?.data || error.message)
+      } else {
+        console.error("Unexpected error while fetching orders:", error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchOrders() // Fetch orders when the component mounts
+  }, [])
+
   const handleSelectItem = (id: string) => {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((item) => item !== id))
@@ -95,9 +188,10 @@ export default function ProductsTab({
   })
 
   // Convert $ to ₹ in product prices
-  const formatPrice = (price: string) => {
-    return price.replace("$", "₹")
-  }
+  const formatPrice = (price: unknown) => {
+    const priceStr = String(price); // Ensure it's a string
+    return priceStr.includes("$") ? priceStr.replace("$", "₹") : priceStr;
+  };
 
   return (
     <motion.div
@@ -134,6 +228,8 @@ export default function ProductsTab({
                     </Label>
                     <Input
                       id="product-name"
+                      value={newProduct.name}
+                      onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                       className="mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                     />
                   </div>
@@ -141,7 +237,10 @@ export default function ProductsTab({
                     <Label htmlFor="product-category" className="dark:text-gray-300 font-medium">
                       Category
                     </Label>
-                    <Select>
+                    <Select
+                      value={newProduct.category}
+                      onValueChange={(value) => setNewProduct({ ...newProduct, category: value })}
+                    >
                       <SelectTrigger className="mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
@@ -167,6 +266,8 @@ export default function ProductsTab({
                     </Label>
                     <Input
                       id="product-price"
+                      value={newProduct.price}
+                      onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
                       placeholder="₹0.00"
                       className="mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                     />
@@ -178,6 +279,8 @@ export default function ProductsTab({
                   </Label>
                   <Textarea
                     id="product-description"
+                    value={newProduct.description}
+                    onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
                     className="mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                   />
                 </div>
@@ -189,6 +292,8 @@ export default function ProductsTab({
                     <Input
                       id="product-stock"
                       type="number"
+                      value={newProduct.stock}
+                      onChange={(e) => setNewProduct({ ...newProduct, stock: Number(e.target.value) })}
                       className="mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                     />
                   </div>
@@ -196,7 +301,10 @@ export default function ProductsTab({
                     <Label htmlFor="product-status" className="dark:text-gray-300 font-medium">
                       Status
                     </Label>
-                    <Select>
+                    <Select
+                      value={newProduct.status}
+                      onValueChange={(value) => setNewProduct({ ...newProduct, status: value })}
+                    >
                       <SelectTrigger className="mt-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
@@ -220,12 +328,22 @@ export default function ProductsTab({
                   </Label>
                   <div className="mt-1 flex items-center gap-4">
                     <div className="w-20 h-20 rounded-md border flex items-center justify-center dark:border-gray-700">
-                      <Upload className="w-8 h-8 text-gray-400" />
+                      {newProduct.image ? (
+                        <img
+                          src={newProduct.image}
+                          alt="Uploaded"
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                      ) : (
+                        <Upload className="w-8 h-8 text-gray-400" />
+                      )}
                     </div>
-                    <Button variant="outline" className="dark:border-gray-600 dark:text-gray-300">
-                      <Upload className="w-4 h-4 mr-2" />
-                      Upload Image
-                    </Button>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="dark:border-gray-600 dark:text-gray-300"
+                    />
                   </div>
                 </div>
               </div>
@@ -235,7 +353,7 @@ export default function ProductsTab({
                 </Button>
                 <Button
                   className="bg-purple-600 hover:bg-purple-700"
-                  onClick={() => onAddItem("Product")}
+                  onClick={handleAddProduct}
                   disabled={isLoading}
                 >
                   {isLoading ? (

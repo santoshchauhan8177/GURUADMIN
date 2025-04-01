@@ -35,32 +35,10 @@ export default function LoginPage() {
       {/* Header */}
       <header className="w-full py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white p-2 rounded-lg">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2L2 7L12 12L22 7L12 2Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 17L12 22L22 17"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 12L12 17L22 12"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <div >
+          <img src="guru logo.jpg" className="h-10 w-auto" alt="Guru-Electrical Logo" /> {/* Fixed logo usage */}
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-poppins">ShopAdmin</h1>
+          {/* <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-poppins">ShopAdmin</h1> */}
         </div>
         <div className="hidden md:flex items-center gap-4">
          
@@ -272,32 +250,10 @@ export default function LoginPage() {
       <footer className="w-full py-6 px-4 sm:px-6 lg:px-8 border-t dark:border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white p-1.5 rounded-md">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2L2 7L12 12L22 7L12 2Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2 17L12 22L22 17"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2 12L12 17L22 12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <div >
+            <img src="guru logo.jpg" className="h-10 w-auto" alt="Guru-Electrical Logo" /> {/* Fixed logo usage */}
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">© 2023 ShopAdmin. All rights reserved.</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">© 2023 Guru-Electrical. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-6">
             <Link

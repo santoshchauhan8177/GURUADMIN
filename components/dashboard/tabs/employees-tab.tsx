@@ -30,8 +30,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-// Import sample data
-import { employees } from "@/data/employees-data"
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 interface EmployeesTabProps {
   isLoading: boolean
@@ -46,16 +46,31 @@ interface EmployeesTabProps {
 }
 
 export default function EmployeesTab({
-  isLoading,
+  isLoading: propIsLoading, // Rename the prop to avoid conflict
   selectedItems,
   setSelectedItems,
   searchQuery,
   onDelete,
   onBulkDelete,
-  onAddItem,
+  onAddItem, // Use the prop function directly
   onUpdateItem,
   onStatusChange,
 }: EmployeesTabProps) {
+  const [employees, setEmployees] = useState([])
+  const [isLoading, setIsLoading] = useState(false) // Local state for loading
+
+  useEffect(() => {
+    async function fetchEmployees() {
+      try {
+        const response = await axios.get("/api/employees") // Ensure the API endpoint is correct
+        setEmployees(response.data)
+      } catch (error) {
+        console.error("Failed to fetch employees:", error)
+      }
+    }
+    fetchEmployees()
+  }, [])
+
   const handleSelectItem = (id: string) => {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((item) => item !== id))
@@ -218,10 +233,10 @@ export default function EmployeesTab({
                 </Button>
                 <Button
                   className="bg-purple-600 hover:bg-purple-700 font-medium"
-                  onClick={() => onAddItem("Employee")}
-                  disabled={isLoading}
+                  onClick={() => onAddItem("Employee")} // Use the prop function
+                  disabled={isLoading || propIsLoading} // Use both local and prop loading states
                 >
-                  {isLoading ? (
+                  {isLoading || propIsLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Saving...

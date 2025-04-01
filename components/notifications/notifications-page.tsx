@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import axios from "axios" // Ensure axios is imported
 import {
   AlertCircle,
   ArrowLeft,
@@ -38,109 +39,32 @@ import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+interface Notification {
+  id: number
+  title: string
+  description: string
+  time: string
+  read: boolean
+  type: string
+}
+
 export default function NotificationsPage() {
   const [selectedTab, setSelectedTab] = useState("all")
-  const [selectedItems, setSelectedItems] = useState([])
+  const [selectedItems, setSelectedItems] = useState<number[]>([])
+  const [notifications, setNotifications] = useState<Notification[]>([])
   const router = useRouter()
 
-  const notifications = [
-    {
-      id: 1,
-      title: "New Order Received",
-      description: "Order #ORD-012 has been placed",
-      time: "5 minutes ago",
-      read: false,
-      type: "order",
-    },
-    {
-      id: 2,
-      title: "Payment Successful",
-      description: "Payment for Order #ORD-008 has been received",
-      time: "1 hour ago",
-      read: false,
-      type: "payment",
-    },
-    {
-      id: 3,
-      title: "Low Stock Alert",
-      description: "Wireless Mouse is running low on stock",
-      time: "3 hours ago",
-      read: true,
-      type: "inventory",
-    },
-    {
-      id: 4,
-      title: "New Customer Registered",
-      description: "Alex Johnson has created an account",
-      time: "5 hours ago",
-      read: true,
-      type: "customer",
-    },
-    {
-      id: 5,
-      title: "Order Shipped",
-      description: "Order #ORD-007 has been shipped",
-      time: "Yesterday",
-      read: true,
-      type: "shipping",
-    },
-    {
-      id: 6,
-      title: "Refund Processed",
-      description: "Refund for Order #ORD-006 has been processed",
-      time: "Yesterday",
-      read: true,
-      type: "refund",
-    },
-    {
-      id: 7,
-      title: "System Update",
-      description: "System will undergo maintenance tonight",
-      time: "2 days ago",
-      read: true,
-      type: "system",
-    },
-    {
-      id: 8,
-      title: "New Order Received",
-      description: "Order #ORD-011 has been placed",
-      time: "2 days ago",
-      read: true,
-      type: "order",
-    },
-    {
-      id: 9,
-      title: "Payment Failed",
-      description: "Payment for Order #ORD-010 has failed",
-      time: "3 days ago",
-      read: true,
-      type: "payment",
-    },
-    {
-      id: 10,
-      title: "Product Review",
-      description: "New 5-star review for Wireless Headphones",
-      time: "4 days ago",
-      read: true,
-      type: "product",
-    },
-    {
-      id: 11,
-      title: "Inventory Update",
-      description: "10 new items added to inventory",
-      time: "5 days ago",
-      read: true,
-      type: "inventory",
-    },
-    {
-      id: 12,
-      title: "Customer Support Ticket",
-      description: "New support ticket #45678 opened",
-      time: "1 week ago",
-      read: true,
-      type: "customer",
-    },
-  ]
+  useEffect(() => {
+    async function fetchNotifications() {
+      try {
+        const response = await axios.get("/api/notifications") // Ensure the API endpoint is correct
+        setNotifications(response.data)
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error)
+      }
+    }
+    fetchNotifications()
+  }, [])
 
   const filteredNotifications = notifications.filter((notification) => {
     if (selectedTab === "all") return true
@@ -148,7 +72,7 @@ export default function NotificationsPage() {
     return notification.type === selectedTab
   })
 
-  const handleSelectItem = (id) => {
+  const handleSelectItem = (id: number) => {
     if (selectedItems.includes(id)) {
       setSelectedItems(selectedItems.filter((item) => item !== id))
     } else {
@@ -164,7 +88,7 @@ export default function NotificationsPage() {
     }
   }
 
-  const getNotificationIcon = (type) => {
+  const getNotificationIcon = (type: string) => {
     switch (type) {
       case "order":
         return <ShoppingCart className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />

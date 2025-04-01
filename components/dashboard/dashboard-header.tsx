@@ -37,7 +37,7 @@ export default function DashboardHeader({
     <header className="sticky top-0 z-10 flex items-center justify-between h-16 px-6 bg-white dark:bg-slate-800 border-b dark:border-slate-700 shadow-sm">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
-          <Menu className="w-5 h-5 dark:text-gray-300" />
+         <img src="guru logo.jpg" className="h-10 w-auto" alt="Guru-Electrical Logo" /> {/* Fixed logo usage */}
         </Button>
 
         <div className="hidden md:block">
