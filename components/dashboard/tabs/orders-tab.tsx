@@ -62,7 +62,18 @@ export default function OrdersTab({
   onUpdateItem,
   onStatusChange,
 }: OrdersTabProps) {
-  const [orders, setOrders] = useState([])
+  interface Order {
+    id: string
+    customer: string
+    date: string
+    items: string
+    payment: string
+    status: string
+    total: string
+    image?: string
+  }
+
+  const [orders, setOrders] = useState<Order[]>([])
 
   useEffect(() => {
     async function fetchOrders() {

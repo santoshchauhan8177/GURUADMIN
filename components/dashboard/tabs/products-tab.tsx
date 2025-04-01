@@ -57,7 +57,7 @@ export default function ProductsTab({
   onUpdateItem,
   onStatusChange,
 }: ProductsTabProps) {
-  const [products, setProducts] = useState([]); // Add state for products
+  const [products, setProducts] = useState<{ id: string; name: string; category: string; price: string; description: string; stock: number; status: string; image: string; sales?: number }[]>([]); // Add state for products
   const [newProduct, setNewProduct] = useState({
     name: "",
     category: "",

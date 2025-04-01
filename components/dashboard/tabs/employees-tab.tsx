@@ -56,7 +56,7 @@ export default function EmployeesTab({
   onUpdateItem,
   onStatusChange,
 }: EmployeesTabProps) {
-  const [employees, setEmployees] = useState([])
+  const [employees, setEmployees] = useState<{ id: string; name: string; department: string; role: string; status: string; email: string; phone?: string }[]>([])
   const [isLoading, setIsLoading] = useState(false) // Local state for loading
 
   useEffect(() => {

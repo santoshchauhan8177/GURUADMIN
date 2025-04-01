@@ -95,7 +95,7 @@ export default function DashboardOverview({ isRefreshing, onRefreshData }: Dashb
           value="₹24,78,000"
           change="+12.5% from last month"
           icon={<DollarSign className="w-6 h-6 text-teal-600 dark:text-teal-400" />}
-          color="teal"
+          color="emerald"
           delay={0.1}
         />
         <StatsCard
@@ -119,7 +119,7 @@ export default function DashboardOverview({ isRefreshing, onRefreshData }: Dashb
           value="2,456"
           change="+15.7% from last month"
           icon={<Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
-          color="blue"
+          color="indigo"
           delay={0.4}
         />
       </div>
