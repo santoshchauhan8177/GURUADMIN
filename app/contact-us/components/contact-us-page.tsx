@@ -19,7 +19,7 @@ interface Question {
   // Add other properties as needed
 }
 
-function handleQuestion({ question }: { question: Question }) {
+function handleQuestion({ question }: { question: string }) {
   // ...existing code...
 }
 
